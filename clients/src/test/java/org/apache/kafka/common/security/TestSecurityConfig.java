@@ -40,6 +40,8 @@ public class TestSecurityConfig extends AbstractConfig {
                     BrokerSecurityConfigs.CONNECTIONS_MAX_REAUTH_MS_DOC)
             .define(BrokerSecurityConfigs.SASL_SERVER_MAX_RECEIVE_SIZE_CONFIG, Type.INT, BrokerSecurityConfigs.DEFAULT_SASL_SERVER_MAX_RECEIVE_SIZE,
                     Importance.LOW, BrokerSecurityConfigs.SASL_SERVER_MAX_RECEIVE_SIZE_DOC)
+            .define(BrokerSecurityConfigs.SSL_CLIENT_AUTH_SPIFFE_ENABLE_CONFIG, Type.BOOLEAN, false,
+                    Importance.MEDIUM, BrokerSecurityConfigs.SSL_CLIENT_AUTH_SPIFFE_ENABLE_CONFIG_DOC)
             .withClientSslSupport()
             .withClientSaslSupport();
 

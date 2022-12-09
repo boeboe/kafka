@@ -27,6 +27,7 @@ import org.apache.kafka.common.security.JaasContext;
 import org.apache.kafka.common.security.authenticator.DefaultKafkaPrincipalBuilder;
 import org.apache.kafka.common.security.auth.KafkaPrincipalBuilder;
 import org.apache.kafka.common.security.authenticator.CredentialCache;
+import org.apache.kafka.common.security.authenticator.SpiffePrincipalBuilder;
 import org.apache.kafka.common.security.kerberos.KerberosShortNamer;
 import org.apache.kafka.common.security.ssl.SslPrincipalMapper;
 import org.apache.kafka.common.security.token.delegation.internals.DelegationTokenCache;
@@ -223,9 +224,15 @@ public class ChannelBuilders {
     public static KafkaPrincipalBuilder createPrincipalBuilder(Map<String, ?> configs,
                                                                KerberosShortNamer kerberosShortNamer,
                                                                SslPrincipalMapper sslPrincipalMapper) {
-        Class<?> principalBuilderClass = (Class<?>) configs.get(BrokerSecurityConfigs.PRINCIPAL_BUILDER_CLASS_CONFIG);
-        final KafkaPrincipalBuilder builder;
 
+        Class<?> principalBuilderClass;
+        if (Boolean.parseBoolean((String) configs.get(BrokerSecurityConfigs.SSL_CLIENT_AUTH_SPIFFE_ENABLE_CONFIG))) {
+            principalBuilderClass = SpiffePrincipalBuilder.class;
+        } else {
+            principalBuilderClass = (Class<?>) configs.get(BrokerSecurityConfigs.PRINCIPAL_BUILDER_CLASS_CONFIG);
+        }
+
+        final KafkaPrincipalBuilder builder;
         if (principalBuilderClass == null || principalBuilderClass == DefaultKafkaPrincipalBuilder.class) {
             builder = new DefaultKafkaPrincipalBuilder(kerberosShortNamer, sslPrincipalMapper);
         } else if (KafkaPrincipalBuilder.class.isAssignableFrom(principalBuilderClass)) {

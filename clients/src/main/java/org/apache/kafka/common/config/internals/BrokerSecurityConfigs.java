@@ -32,6 +32,10 @@ public class BrokerSecurityConfigs {
     public static final String PRINCIPAL_BUILDER_CLASS_CONFIG = "principal.builder.class";
     public static final String SASL_KERBEROS_PRINCIPAL_TO_LOCAL_RULES_CONFIG = "sasl.kerberos.principal.to.local.rules";
     public static final String SSL_CLIENT_AUTH_CONFIG = "ssl.client.auth";
+    public static final String SSL_CLIENT_AUTH_SPIFFE_ENABLE_CONFIG = "ssl.client.auth.spiffe.enable";
+    public static final String SSL_CLIENT_AUTH_SPIFFE_ENABLE_CONFIG_DOC = "If enabled, the X509 Subject Alternative " +
+            "Name (SAN) with SPIFFE URI is used for authorization purposes instead of the default X500 Subject. If " +
+            "no X509 SAN is available, fall back to X500 Subject principle instead.";
     public static final String SASL_ENABLED_MECHANISMS_CONFIG = "sasl.enabled.mechanisms";
     public static final String SASL_SERVER_CALLBACK_HANDLER_CLASS = "sasl.server.callback.handler.class";
     public static final String SSL_PRINCIPAL_MAPPING_RULES_CONFIG = "ssl.principal.mapping.rules";

@@ -22,6 +22,7 @@ import org.apache.kafka.common.security.TestSecurityConfig;
 import org.apache.kafka.common.security.auth.AuthenticationContext;
 import org.apache.kafka.common.security.auth.KafkaPrincipal;
 import org.apache.kafka.common.security.auth.KafkaPrincipalBuilder;
+import org.apache.kafka.common.security.authenticator.SpiffePrincipalBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -42,6 +43,14 @@ public class ChannelBuildersTest {
         KafkaPrincipalBuilder builder = ChannelBuilders.createPrincipalBuilder(configs, null, null);
         assertTrue(builder instanceof ConfigurableKafkaPrincipalBuilder);
         assertTrue(((ConfigurableKafkaPrincipalBuilder) builder).configured);
+    }
+
+    @Test
+    public void testUseSpiffePrincipalBuilder() {
+        Map<String, Object> configs = new HashMap<>();
+        configs.put(BrokerSecurityConfigs.SSL_CLIENT_AUTH_SPIFFE_ENABLE_CONFIG, "true");
+        KafkaPrincipalBuilder builder = ChannelBuilders.createPrincipalBuilder(configs, null, null);
+        assertTrue(builder instanceof SpiffePrincipalBuilder);
     }
 
     @Test
